@@ -1,0 +1,32 @@
+.rating {
+  display: flex;
+  align-items: center;
+
+  .stars {
+    display: flex;
+    align-items: center;
+
+    .editable {
+      cursor: pointer;
+    }
+  }
+
+  .number {
+    font-weight: bold;
+    background: #3291ff;
+    color: white;
+    border-radius: 3px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 2px 5px 3px;
+    margin-left: 10px;
+    text-transform: capitalize;
+
+    .t-content {
+      &.rightSpace {
+        margin-left: 5px;
+      }
+    }
+  }
+}

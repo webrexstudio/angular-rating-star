@@ -1,0 +1,30 @@
+<div class="rating">
+  <div class="stars">
+    <div class="star" *ngFor="let startColor of startColors; let i=index" (click)="onSelectRating(i)" (mouseenter)="mouseEnter($event,i)"
+      [ngClass]="isEditable ? 'editable' : ''">
+
+      <svg [attr.height.px]="starSize" viewBox="0 0 16 16" [attr.width.px]="starSize">
+        <defs>
+          <linearGradient id="{{startColor.id}}">
+            <stop offset="0%" [attr.stop-color]="activeColor" />
+            <stop [attr.offset]="startColor.activeColor" [attr.stop-color]="activeColor" />
+            <stop [attr.offset]="startColor.grayColor" [attr.stop-color]="normalColor" />
+            <stop offset="100%" [attr.stop-color]="normalColor" />
+          </linearGradient>
+        </defs>
+        <g fill="none" fill-rule="evenodd" id="Icons with numbers" stroke="none" stroke-width="1">
+          <g [attr.fill]="startColor.url" id="Group" transform="translate(-384.000000, -480.000000)">
+            <path d="M392,491.953125 L387.022583,495.99353 L389.032704,489.524391 L384.015259,486.030029 L390.052612,486.030029 L392,480 L393.984253,486.030029 L400.065063,486.030029 L394.967296,489.524392 L397.036133,495.99353 L392,491.953125 Z M392,491.953125"
+              id="Star 240 copy" />
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div *ngIf="showLabels || showNumber" class="number base-tooltip" [style.background-color]="labelBackground"
+    [style.color]="labelColor">
+    <div *ngIf="showNumber">{{rating}}</div>
+    <div *ngIf="showLabels" [ngClass]="{'rightSpace': showNumber}" class="t-content">{{rating > 4 ? labels[4] : rating
+      > 3 ? labels[3] : rating > 2 ? labels[2] : rating > 1 ? labels[1] : labels[0]}}</div>
+  </div>
+</div>

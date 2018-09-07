@@ -1,0 +1,21 @@
+{
+  "name": "angular-rating-star",
+  "version": "1.0.2",
+  "author": "Webrex Studio <hello@webrexstudio.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/core": ">=2.0.0",
+    "@angular/common": ">=2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webrexstudio/angular-rating-star"
+  },
+  "ngPackage": {
+    "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+    "lib": {
+      "entryFile": "public_api.ts"
+    },
+    "dest": "dist"
+  }
+}

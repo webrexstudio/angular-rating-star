@@ -1,0 +1,27 @@
+{
+  "name": "angular-rating-star",
+  "version": "1.0.2",
+  "author": "Webrex Studio <hello@webrexstudio.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/core": ">=2.0.0",
+    "@angular/common": ">=2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webrexstudio/angular-rating-star"
+  },
+  "main": "bundles/angular-rating-star.umd.js",
+  "module": "fesm5/angular-rating-star.js",
+  "es2015": "fesm2015/angular-rating-star.js",
+  "esm5": "esm5/angular-rating-star.js",
+  "esm2015": "esm2015/angular-rating-star.js",
+  "fesm5": "fesm5/angular-rating-star.js",
+  "fesm2015": "fesm2015/angular-rating-star.js",
+  "typings": "angular-rating-star.d.ts",
+  "metadata": "angular-rating-star.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
