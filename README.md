@@ -2,6 +2,10 @@
 
 The Rating-star extension provides a tag extension that when embedded in a page allows users to rate different "properties" of the page.
 
+## Demos and Sample Usage
+
+For Demos and sample usage of this package have a look at the Link [angular-rating-star](https://www.webrexstudio.com/angular-rating-star/).
+
 ## Installation 
 
 ```
