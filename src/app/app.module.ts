@@ -4,18 +4,18 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-//import { StarRatingComponent } from './star-rating/star-rating/star-rating.component';
-import { StarRatingModule } from 'angular-rating-star';
+import { StarRatingComponent } from './star-rating/star-rating/star-rating.component';
+//import { StarRatingModule } from 'angular-rating-star';   
 
 @NgModule({
   declarations: [
     AppComponent,
-    //StarRatingComponent
+    StarRatingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StarRatingModule
+    //StarRatingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-
+import { DataSet } from './star-rating.constant';
 @Component({
 	selector: 'app-star-rating',
 	templateUrl: './star-rating.component.html',
@@ -9,89 +9,77 @@ export class StarRatingComponent implements OnInit {
 
 	@Input() rating: number;
 	@Input() isEditable: boolean = false;
-	@Input() dataSet: any = {};
+	@Input() dataSet: any = DataSet;
 
-	public colors = ["#ff0109", "#ff7f2b", "#f7ba44", "#9ACD32", "#5ba82a"];
-	public labels = ["Bad", "Not Good", "Average", "Good", "Best"];
-	public activeColor = "#808080";
-	public normalColor = "rgba(0,0,0,0.3)";
+	public noOfStars = 5;
 	public startColors = [];
-	public per = "100%";
-	public showLabels: boolean = true;
-	public showNumber: boolean = true;
-	public labelBackground = this.activeColor;
-	public labelColor = "#fff";
 	public starSize = "20";
+	public labelBackground = this.dataSet.activeColor;
 
 	constructor() { }
 	ngOnInit() {
-		this.showLabels = typeof (this.dataSet.showLabels) === "boolean" ? this.dataSet.showLabels : true;
-		this.showNumber = typeof (this.dataSet.showNumber) === "boolean" ? this.dataSet.showNumber : true;
-		this.colors = typeof (this.dataSet.colors) === "object" && this.dataSet.colors.length == 5 ? this.dataSet.colors : this.colors;
-		this.labels = typeof (this.dataSet.labels) === "object" && this.dataSet.labels.length == 5 ? this.dataSet.labels : this.labels;
-		this.normalColor = typeof (this.dataSet.normalColor) === "string" ? this.dataSet.normalColor : this.normalColor;
-		this.labelBackground = typeof (this.dataSet.labelsStyle) === "object" && typeof (this.dataSet.labelsStyle.background) === "string" ? this.dataSet.labelsStyle.background : this.labelBackground;
-		this.labelColor = typeof (this.dataSet.labelsStyle) === "object" && typeof (this.dataSet.labelsStyle.color) === "string" ? this.dataSet.labelsStyle.color : this.labelColor;
 		this.starSize = typeof (this.dataSet.starSize) === "string" ? this.dataSet.starSize : this.starSize;
+		this.noOfStars = typeof (this.dataSet.noOfStars) === "number" ? this.dataSet.noOfStars : this.noOfStars;
+		this.labelBackground = typeof (this.dataSet.labelsStyle) === "object" && typeof (this.dataSet.labelsStyle.background) === "string" ? this.dataSet.labelsStyle.background : this.labelBackground;
+		/* if (this.noOfStars > 5 && this.showLabels == true) {
+			if (this.colors.length != this.noOfStars && this.labels.length != this.noOfStars) {
+				this.isError = true;
+				this.errorMsg = "Please add array[6] for both colors[] and labels[] ";
+			}
+		}
+		else if (this.noOfStars > 5) {
+			this.isError = true;
+			this.errorMsg = "Please add colour eaquals to noOfStar";
+		}
+		else {
+			this.isError = false;
+		} */
+
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		setTimeout(() => {
-			this.getColor();
-		}, true);
+		this.dataSet = { ...DataSet, ...this.dataSet };
+		this.getColor();
 	}
 
 	getColor() {
-		this.colors.forEach((color, index) => {
+		this.dataSet.colors.forEach((color, index) => {
 			index = index + 1;
 			if (index >= this.rating + 1) {
-				this.startColors.push({
-					'activeColor': String(0) + "%",
-					'grayColor': String(0) + "%",
-					'id': Date.now() + "start" + index,
-					"url": "url(#" + Date.now() + "start" + index + ")"
-				})
+				this.startColors.push(this.getStarObject(index, 0));
 			} else if (index < this.rating) {
-				this.startColors.push({
-					'activeColor': String(100) + "%",
-					'grayColor': String(100) + "%",
-					'id': Date.now() + "start" + index,
-					"url": "url(#" + Date.now() + "start" + index + ")"
-				})
+				this.startColors.push(this.getStarObject(index, 100));
 			} else {
-				this.activeColor = color;
 				this.labelBackground = typeof (this.dataSet.labelsStyle) === "object" && typeof (this.dataSet.labelsStyle.background) === "string" ? this.dataSet.labelsStyle.background : color;
-				this.labelColor = typeof (this.dataSet.labelsStyle) === "object" && typeof (this.dataSet.labelsStyle.color) === "string" ? this.dataSet.labelsStyle.color : '#fff';
-
-				this.startColors.push({
-					'activeColor': String(100 - (index - this.rating) * 100) + "%",
-					'grayColor': String(100 - (index - this.rating) * 100) + "%",
-					'id': Date.now() + "start" + index,
-					"url": "url(#" + Date.now() + "start" + index + ")"
-				})
+				this.dataSet.labelColor = typeof (this.dataSet.labelsStyle) === "object" && typeof (this.dataSet.labelsStyle.color) === "string" ? this.dataSet.labelsStyle.color : '#fff';
+				this.dataSet.activeColor = color;
+				this.startColors.push(this.getStarObject(index, (100 - (index - this.rating))));
 			}
 		})
 	}
 
-	mouseEnter(event, index) {
-		if (this.isEditable) {
-			this.rating = index + 1;
-			setTimeout(() => {
-				this.startColors = [];
-				this.getColor();
-			}, true);
+	getStarObject(index, value) {
+		return {
+			'activeColor': String(value) + "%",
+			'grayColor': String(value) + "%",
+			'id': Date.now() + "start" + index,
+			"url": "url(#" + Date.now() + "start" + index + ")"
 		}
 	}
 
-
+	mouseEnter(index) {
+		if (this.isEditable) {
+			this.rating = index + 1;
+			this.startColors = [];
+			this.getColor();
+		}
+	}
 
 	onSelectRating(index) {
 		if (this.isEditable) {
 			this.rating = index + 1;
-			setTimeout(() => {
-				this.startColors = [];
-				this.getColor();
-			}, true);
+			this.startColors = [];
+			this.getColor();
 		}
 	}
 }

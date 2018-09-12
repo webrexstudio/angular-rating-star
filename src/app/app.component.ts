@@ -8,8 +8,9 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
 	title = 'mere bhai pele app';
-	dataSet = {
-		colors: ["#ff4545", "#ffa534", "#c3c366", "#6ac34e", "#45B523", "#45B523"],
+	dataSet: Object = {
+		// noOfStar: 5,
+		// colors: ["#ff4545", "#ffa534", "#c3c366", "#6ac34e", "#45B523"],
 		// showLabels: false,
 		// showNumber: false,		
 		// labels: ["Bad", "Not Good", "Average", "Good", "Best"],
