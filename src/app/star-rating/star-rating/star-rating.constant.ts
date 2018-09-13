@@ -1,8 +1,8 @@
 export const DataSet: any = {
     'showLabels': true,
     'showNumber': true,
-    'colors': ["#ff0109", "#ff7f2b", "#f7ba44", "#9ACD32", "#5ba82a"],
-    'labels': ["Bad", "Not Good", "Average", "Good", "Best"],
+    'colors': ["#dc210f", "#b83d10", "#935a10", "#6f7610", "#4a9211"],
+    'labels': ["Bad", "Not Good", "Average", "Good", "Perfact"],
     'activeColor': '#808080',
     'normalColor': "rgba(0,0,0,0.3)",
     /* 'labelsStyle': {
@@ -10,5 +10,6 @@ export const DataSet: any = {
         color: '#f8f8f8',
     }, */
     'starSize': "20",
+    'noOfStars': 5,
     'startColors': [1, 5]
 };

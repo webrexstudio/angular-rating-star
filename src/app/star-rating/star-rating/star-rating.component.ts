@@ -11,35 +11,42 @@ export class StarRatingComponent implements OnInit {
 	@Input() isEditable: boolean = false;
 	@Input() dataSet: any = DataSet;
 
-	public noOfStars = 5;
+
 	public startColors = [];
 	public starSize = "20";
 	public labelBackground = this.dataSet.activeColor;
+	public rgb: any;
+	public errorMsg: String;
 
 	constructor() { }
 	ngOnInit() {
 		this.starSize = typeof (this.dataSet.starSize) === "string" ? this.dataSet.starSize : this.starSize;
-		this.noOfStars = typeof (this.dataSet.noOfStars) === "number" ? this.dataSet.noOfStars : this.noOfStars;
 		this.labelBackground = typeof (this.dataSet.labelsStyle) === "object" && typeof (this.dataSet.labelsStyle.background) === "string" ? this.dataSet.labelsStyle.background : this.labelBackground;
-		/* if (this.noOfStars > 5 && this.showLabels == true) {
-			if (this.colors.length != this.noOfStars && this.labels.length != this.noOfStars) {
-				this.isError = true;
-				this.errorMsg = "Please add array[6] for both colors[] and labels[] ";
-			}
-		}
-		else if (this.noOfStars > 5) {
-			this.isError = true;
-			this.errorMsg = "Please add colour eaquals to noOfStar";
-		}
-		else {
-			this.isError = false;
-		} */
-
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		this.dataSet = { ...DataSet, ...this.dataSet };
+
+		if (this.dataSet.noOfStars > this.dataSet.colors.length) {
+			if (this.dataSet.noOfStars > this.dataSet.labels.length) {
+				this.errorMsg = "You Need to add " + this.dataSet.noOfStars + " labels in array of labels";
+			}
+			else {
+				this.errorMsg = "";
+			}
+
+			this.rgb = this.interpolateColors("rgb(220, 33, 15)", "rgb(74, 146, 17)", this.dataSet.noOfStars);
+			this.dataSet.colors = [];
+			this.rgb.forEach(element => {
+				this.dataSet.colors.push(this.rgbToHex(element[0], element[1], element[2]));
+			});
+		}
+		else {
+			this.errorMsg = "";
+		}
+
 		this.getColor();
+
 	}
 
 	getColor() {
@@ -82,4 +89,43 @@ export class StarRatingComponent implements OnInit {
 			this.getColor();
 		}
 	}
+
+	// Getiing colour range dunamically
+	interpolateColor(color1, color2, factor) {
+		if (arguments.length < 3) {
+			factor = 0.5;
+		}
+		var result = color1.slice();
+		for (var i = 0; i < 3; i++) {
+			result[i] = Math.round(result[i] + factor * (color2[i] - color1[i]));
+		}
+		return result;
+	};
+	// My function to interpolate between two colors completely, returning an array
+	interpolateColors(color1, color2, steps) {
+		var stepFactor = 1 / (steps - 1),
+			interpolatedColorArray = [];
+
+		color1 = color1.match(/\d+/g).map(Number);
+		color2 = color2.match(/\d+/g).map(Number);
+
+		for (var i = 0; i < steps; i++) {
+			interpolatedColorArray.push(this.interpolateColor(color1, color2, stepFactor * i));
+		}
+
+		return interpolatedColorArray;
+	}
+
+	//convert RGB to hex 
+	componentToHex(c) {
+		var hex = c.toString(16);
+		return hex.length == 1 ? "0" + hex : hex;
+	}
+
+	rgbToHex(r, g, b) {
+		return "#" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+	}
+
+
+
 }

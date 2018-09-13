@@ -22,6 +22,8 @@
       </svg>
     </div>
   </div>
+
+
   <div *ngIf="dataSet.showLabels || dataSet.showNumber" class="number base-tooltip" [style.background-color]="labelBackground"
     [style.color]="dataSet.labelColor">
     <div *ngIf="dataSet.showNumber">{{rating}}</div>
@@ -30,9 +32,6 @@
       > 3 ? dataSet.labels[3] : rating > 2 ? dataSet.labels[2] : rating > 1 ? dataSet.labels[1] : dataSet.labels[0]}}</div>
   </div>
 </div>
-<!-- <div class="error" *ngIf="isError">
-  <span>{{errorMsg}}</span><br>
-  <span>colors: ["#ff4545", "#ffa534", "#c3c366", ...] <span class="comment">//array of {{noOfStars}}</span></span><br>
-  <span>labels: ["Bad", "Not Good", ...]<span class="comment">//array of {{noOfStars}}</span></span><br>
-  <span>in dataset</span>
-</div> -->
+<div class="error" *ngIf="errorMsg != ''">
+  <span>{{errorMsg}}</span>
+</div>
